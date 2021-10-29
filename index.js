@@ -17,20 +17,16 @@ async function run() {
       const database = client.db("tourism");
       const serviceCollection = database.collection("serviceCollection");
       // create a document to insert
-      const service = {
-        title: "our service",
-        content: "this is our tourism services ",
-      }
-    //   const result = await serviceCollection.insertOne(service);
+   
+      app.get('/services',async(req,res)=>{
+        const cursor=serviceCollection.find({})
+        const services=await cursor.toArray()
+        res.send(services)
+    })
+
+
+      const result = await serviceCollection.insertOne(service);
       console.log(`A document was inserted with the _id: ${result.insertedId}`);
-
-
-
-
-
-
-
-
 
     } finally {
     //   await client.close();
@@ -54,9 +50,7 @@ async function run() {
 app.get('/',(req,res)=>{
     res.send('server is my server is running')
 })
-app.get('/services',(req,res)=>{
-    res.send('this si hidden')
-})
+
 app.listen(port,()=>{
     console.log('listening port is ' ,port);
 })
