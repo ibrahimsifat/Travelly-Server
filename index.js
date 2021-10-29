@@ -1,56 +1,51 @@
 const express=require('express')
 const app=express()
-const port= process.env.PORT || 5000
+const port=process.env.PORT || 5000;
 require('dotenv').config()
-const { MongoClient } = require('mongodb');
+const cors=require('cors')
+const ObjectId=require('mongodb').ObjectId
 
-//connect mongodb
+// middleware
+
+app.use(cors())
+app.use(express.json())
+
+const { MongoClient } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.1clhw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-console.log(uri);
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
+console.log(uri);
+async function run(){
+    await client.connect();
+    const database = client.db("Genius-Car");
+    const serviceCollection = database.collection("services");
 
-
-async function run() {
-    try {
-      await client.connect();
-      const database = client.db("tourism");
-      const serviceCollection = database.collection("serviceCollection");
-      // create a document to insert
-   
-      app.get('/services',async(req,res)=>{
-        const cursor=serviceCollection.find({})
-        const services=await cursor.toArray()
-        res.send(services)
-    })
-
-
-    
-    
-
-    } finally {
-    //   await client.close();
-    }
-  }
-  run().catch(console.dir);
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 
-app.get('/',(req,res)=>{
-    res.send('server is my server is running')
+// GET API
+app.get('/services',async(req,res)=>{
+    const cursor=serviceCollection.find({})
+    const services=await cursor.toArray()
+    res.send(services)
 })
 
-app.listen(port,()=>{
-    console.log('listening port is ' ,port);
+
+
+}
+run().catch(console.dir)
+
+app.get('/',(req,res)=>{
+    res.send('running d sdfsdg ')
+})
+
+
+
+
+
+
+
+
+
+
+
+app.listen(port,(req,res)=>{
+    console.log('running prot',port);
 })
