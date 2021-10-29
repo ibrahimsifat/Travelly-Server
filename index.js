@@ -54,6 +54,9 @@ async function run() {
 app.get('/',(req,res)=>{
     res.send('server is my server is running')
 })
+app.get('/services',(req,res)=>{
+    res.send('this si hidden')
+})
 app.listen(port,()=>{
     console.log('listening port is ' ,port);
 })
