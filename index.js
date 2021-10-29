@@ -25,8 +25,8 @@ async function run() {
     })
 
 
-      const result = await serviceCollection.insertOne(service);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    
+    
 
     } finally {
     //   await client.close();
