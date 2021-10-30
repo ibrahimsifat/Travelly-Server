@@ -26,7 +26,15 @@ app.get('/services',async(req,res)=>{
     const services=await cursor.toArray()
     res.send(services)
 })
-
+//Get api with id
+app.get('/services/:id',async(req,res)=>{
+  const id=req.params.id
+  console.log(id);
+  const query={_id:ObjectId(id)}
+  const result=await serviceCollection.findOne(query)
+  res.send(result)
+  
+})
 
 
 }
